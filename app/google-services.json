@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "644311627477",
+    "firebase_url": "https://elementsapp-71927.firebaseio.com",
+    "project_id": "elementsapp-71927",
+    "storage_bucket": "elementsapp-71927.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644311627477:android:2b9acb837bcf6bb4",
+        "android_client_info": {
+          "package_name": "vane.micasa.co.elementsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "644311627477-8aqhqod1trcedi1vu0kst9pr05p6l04u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "vane.micasa.co.elementsapp",
+            "certificate_hash": "0b3f1de811cf4ebde2ddd76c03586b06cf1c2f51"
+          }
+        },
+        {
+          "client_id": "644311627477-tppq7t5hqa604p3l71efb0sds1its7eu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0WaK7gw2EJW_eicMfc9r0OE7GiNesgZM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644311627477-tppq7t5hqa604p3l71efb0sds1its7eu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
