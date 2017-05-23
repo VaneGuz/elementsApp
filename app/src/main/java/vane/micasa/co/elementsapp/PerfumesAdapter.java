@@ -33,7 +33,7 @@ public class PerfumesAdapter extends RecyclerView.Adapter<PerfumesAdapter.Perfum
 
     @Override
     public PerfumesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_events,parent,false);
+    View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_perfume,parent,false);
         PerfumesViewHolder holder = new PerfumesViewHolder(v);
         return holder;
     }
