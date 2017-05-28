@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "625821226075",
+    "firebase_url": "https://elementsaplication.firebaseio.com",
+    "project_id": "elementsaplication",
+    "storage_bucket": "elementsaplication.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:625821226075:android:aa8ec90e736515c3",
+        "android_client_info": {
+          "package_name": "vane.micasa.co.elementsaplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "625821226075-177n778eqtipa0en895tj3r6msgkaifn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCm4Voqj_tgwMc_1A-_mI_SEB4bqonFNk8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
