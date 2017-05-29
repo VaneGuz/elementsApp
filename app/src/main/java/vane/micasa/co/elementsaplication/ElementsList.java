@@ -18,6 +18,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import vane.micasa.co.elementsaplication.data.Perfume;
+
 /**
  * Created by Michael Garcia on 28/05/2017.
  */

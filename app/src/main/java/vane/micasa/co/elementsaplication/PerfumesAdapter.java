@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import vane.micasa.co.elementsaplication.data.Perfume;
+
 /**
  * Created by Michael Garcia on 10/05/2017.
  */

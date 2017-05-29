@@ -1,11 +1,11 @@
 package vane.micasa.co.elementsaplication;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,28 +15,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
+import vane.micasa.co.elementsaplication.fragment.Catalogo;
+import vane.micasa.co.elementsaplication.fragment.Contable;
+import vane.micasa.co.elementsaplication.fragment.Pedido;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    RecyclerView rv;
-    EditText nombre;
-    EditText mililitros;
-    EditText genero;
-    FirebaseDatabase database;
-    DatabaseReference perfumeRef;
-    List<Perfume> listPerfume;
-    final FirebaseApp firebaseApp  = FirebaseApp.initializeApp(this);
+    private Fragment fragment = null;
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,49 +50,8 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        displaySelectedScreen(R.id.nav_pedido);
 
-
-        nombre = (EditText) findViewById(R.id.nombrePerfume);
-        mililitros = (EditText) findViewById(R.id.mililitrosPerfume);
-        genero = (EditText) findViewById(R.id.generoPerfume);
-        rv = (RecyclerView) findViewById(R.id.recycler);
-        final PerfumesAdapter adapter;
-
-
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.setHasFixedSize(true);
-        listPerfume = new ArrayList<>();
-
-
-        adapter = new PerfumesAdapter(listPerfume);
-        rv.setAdapter(adapter);
-
-        database = database.getInstance();
-        perfumeRef = database.getReference(FirebaseReferences.PERFUME_REFERENCE);
-
-
-        perfumeRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.i("LOG", dataSnapshot.toString());
-                // String prueba = dataSnapshot.child("nombre").getValue(String.class);
-                listPerfume.removeAll(listPerfume);
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()
-                        ) {
-                    Perfume perfume = snapshot.getValue(Perfume.class);
-                    listPerfume.add(perfume);
-
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e("LOG", "ERRRROOOOR");
-            }
-        });
-
-        Log.i("LOG", "entroooooo2");
     }
 
     @Override
@@ -143,35 +89,37 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
+        displaySelectedScreen(item.getItemId());
+        //make this method blank
+        return true;
+    }
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+    private void displaySelectedScreen(int itemId) {
 
-        } else if (id == R.id.nav_slideshow) {
+        //creating fragment object
+       fragment = null;
 
-        } else if (id == R.id.nav_manage) {
+        //initializing the fragment object which is selected
+        switch (itemId) {
+            case R.id.nav_pedido:
+                fragment = new Pedido();
+                break;
+            case R.id.nav_contable:
+                fragment = new Contable();
+                break;
+            case R.id.nav_catalogo:
+                fragment = new Catalogo();
+                break;
+        }
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (fragment != null) {
+            fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+//            getSupportActionBar().setTitle(title);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
-    public void crearPerfume(View view) {
-        Perfume perfume = new Perfume();
-        perfume.setNombre(nombre.getText().toString());
-        perfume.setGenero(genero.getText().toString());
 
-
-        perfumeRef.push().setValue(perfume);
-
-
-    }
 }
