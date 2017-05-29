@@ -3,7 +3,7 @@ package vane.micasa.co.elementsaplication.fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +33,7 @@ public class Estadistica extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Estadistica.
+     * @return A new instance of fragm
      */
     // TODO: Rename and change types and number of parameters
     public static Estadistica newInstance(String param1, String param2) {

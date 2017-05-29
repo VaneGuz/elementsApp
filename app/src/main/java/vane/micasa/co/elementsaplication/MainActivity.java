@@ -1,11 +1,12 @@
 package vane.micasa.co.elementsaplication;
 
-import android.app.Fragment;
+
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.app.Fragment;
 
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,14 +17,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import vane.micasa.co.elementsaplication.fragment.CatalogoAdd;
+import vane.micasa.co.elementsaplication.fragment.ContableAdd;
 import vane.micasa.co.elementsaplication.fragment.Catalogo;
 import vane.micasa.co.elementsaplication.fragment.Contable;
 import vane.micasa.co.elementsaplication.fragment.Pedido;
+import vane.micasa.co.elementsaplication.fragment.PedidoAdd;
+import vane.micasa.co.elementsaplication.fragment.Portada;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private Fragment fragment = null;
     private FragmentManager fragmentManager;
+    FloatingActionButton fab;
+    Fragment pedidoFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +39,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        displaySelectedScreen(R.id.nav_pedido);
+        displaySelectedScreen(R.id.nav_portada);
 
     }
 
@@ -94,13 +94,16 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void displaySelectedScreen(int itemId) {
+    public void displaySelectedScreen(int itemId) {
 
         //creating fragment object
-       fragment = null;
+        fragment = null;
 
         //initializing the fragment object which is selected
         switch (itemId) {
+            case R.id.nav_portada:
+                fragment = new Portada();
+                break;
             case R.id.nav_pedido:
                 fragment = new Pedido();
                 break;
@@ -122,4 +125,34 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
     }
 
+    public void onFABClick(View view) {
+        Fragment frag = getFragmentManager().findFragmentById(R.id.content_frame);
+
+        if (frag instanceof Portada) {
+            Log.i("TAG", "encontrado el actual fragment portada");
+        } else if (frag instanceof Pedido) {
+            fragment = new PedidoAdd();
+            Log.i("TAG", "encontrado el actual fragment pedido");
+        } else if (frag instanceof Contable) {
+            fragment = new ContableAdd();
+            Log.i("TAG", "encontrado el actual fragment contable");
+        } else if (frag instanceof Catalogo) {
+            fragment = new CatalogoAdd();
+            Log.i("TAG", "encontrado el actual fragment catalogo");
+        }
+        if (fragment != null) {
+            fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+//            getSupportActionBar().setTitle(title);
+        }
+    }
+
+    public void crearPerfume(View view) {
+        CatalogoAdd cat = (CatalogoAdd) getFragmentManager().findFragmentById(R.id.content_frame);
+        Log.i("TAG", "crear perfume");
+        cat.crearPerfume();
+    }
 }
+
+
+

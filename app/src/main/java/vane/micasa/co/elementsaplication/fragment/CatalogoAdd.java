@@ -1,59 +1,54 @@
 package vane.micasa.co.elementsaplication.fragment;
+
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import vane.micasa.co.elementsaplication.FirebaseReferences;
-import vane.micasa.co.elementsaplication.adapter.PerfumesAdapter;
 import vane.micasa.co.elementsaplication.R;
 import vane.micasa.co.elementsaplication.data.PerfumePojo;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Catalogo.OnFragmentInteractionListener} interface
+ * {@link CatalogoAdd.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Catalogo#newInstance} factory method to
+ * Use the {@link CatalogoAdd#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Catalogo extends Fragment {
-    private static View view;
-    private static RecyclerView rv;
-    private static PerfumesAdapter adapter;
+public class CatalogoAdd extends Fragment {
     EditText nombre;
-    EditText mililitros;
     EditText genero;
-    FirebaseDatabase database;
+    EditText casa;
+    EditText fechaPreparacion;
+    EditText fechaDisponible;
+    EditText mililitros;
     DatabaseReference perfumeRef;
-    List<PerfumePojo> listPerfume;
-//    final FirebaseApp firebaseApp  = FirebaseApp.initializeApp(this);
+    FirebaseDatabase database;
+
+    private static View view;
 
     private OnFragmentInteractionListener mListener;
 
-    public Catalogo() {
+    public CatalogoAdd() {
+        // Required empty public constructor
     }
 
+    public static CatalogoAdd newInstance() {
+        CatalogoAdd fragment = new CatalogoAdd();
 
-    public static Catalogo newInstance() {
-        Catalogo fragment = new Catalogo();
         return fragment;
     }
 
@@ -61,51 +56,23 @@ public class Catalogo extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        view = inflater.inflate(R.layout.fragment_catalogo, container, false);
-        view = inflater.inflate(R.layout.fragment_catalogo, container, false);
-        populateRecyclerView();
-        return view;
-    }
-
-    private void populateRecyclerView() {
-        rv = (RecyclerView) view.findViewById(R.id.recycler);
-        rv.setHasFixedSize(true);
-        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        listPerfume = new ArrayList<>();
-
-        adapter = new PerfumesAdapter(listPerfume);
-        rv.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        view = inflater.inflate(R.layout.fragment_catalogo_add, container, false);
+        nombre = (EditText) view.findViewById(R.id.addNombre_catalogo);
+        genero = (EditText) view.findViewById(R.id.addGenero_catalogo);
+        casa = (EditText) view.findViewById(R.id.addCasa_catalogo);
+        fechaDisponible = (EditText) view.findViewById(R.id.addFechaDisponible_catalogo);
+        fechaPreparacion = (EditText) view.findViewById(R.id.addFechaPreparacion_catalogo);
+        mililitros = (EditText) view.findViewById(R.id.addMililitros_catalogo);
 
         database = database.getInstance();
         perfumeRef = database.getReference(FirebaseReferences.PERFUME_REFERENCE);
-
-        perfumeRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.i("LOG", dataSnapshot.toString());
-                // String prueba = dataSnapshot.child("nombre").getValue(String.class);
-                listPerfume.removeAll(listPerfume);
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()
-                        ) {
-                    PerfumePojo perfume = snapshot.getValue(PerfumePojo.class);
-                    listPerfume.add(perfume);
-
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e("LOG", "ERRRROOOOR");
-            }
-        });
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -145,5 +112,21 @@ public class Catalogo extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    public void crearPerfume() {
+        PerfumePojo perfume = new PerfumePojo();
+        perfume.setNombre(nombre.getText().toString());
+        perfume.setGenero(genero.getText().toString());
+        perfume.setCasa(casa.getText().toString());
+        perfume.setMililitrosTotal(Long.parseLong(mililitros.getText().toString()));
+        perfume.setFechaDisponible(fechaDisponible.getText().toString());
+        perfume.setFechaPreparacion(fechaPreparacion.getText().toString());
+        Log.i("TAG", "crear perfume fragment");
+        //TODO Controlar cuando no se guarda con exito
+         perfumeRef.push().setValue(perfume);
+        Snackbar.make(view, "Perfume creado con éxito", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+        getFragmentManager().beginTransaction().replace(R.id.content_frame, new Catalogo()).commit();
+
     }
 }

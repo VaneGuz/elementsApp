@@ -1,4 +1,4 @@
-package vane.micasa.co.elementsaplication;
+package vane.micasa.co.elementsaplication.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,14 +8,15 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import vane.micasa.co.elementsaplication.data.Perfume;
+import vane.micasa.co.elementsaplication.R;
+import vane.micasa.co.elementsaplication.data.PerfumePojo;
 
 /**
  * Created by Michael Garcia on 10/05/2017.
  */
 
 public class PerfumesAdapter extends RecyclerView.Adapter<PerfumesAdapter.PerfumesViewHolder> {
-    public PerfumesAdapter(List<Perfume> listPerfume) {
+    public PerfumesAdapter(List<PerfumePojo> listPerfume) {
         this.listPerfume = listPerfume;
     }
     public static class PerfumesViewHolder extends RecyclerView.ViewHolder{
@@ -31,7 +32,7 @@ public class PerfumesAdapter extends RecyclerView.Adapter<PerfumesAdapter.Perfum
         }
     }
 
-    List<Perfume> listPerfume;
+    List<PerfumePojo> listPerfume;
 
     @Override
     public PerfumesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -42,7 +43,7 @@ public class PerfumesAdapter extends RecyclerView.Adapter<PerfumesAdapter.Perfum
 
     @Override
     public void onBindViewHolder(PerfumesViewHolder holder, int position) {
-    Perfume perfume = listPerfume.get(position);
+    PerfumePojo perfume = listPerfume.get(position);
         holder.nombre.setText(perfume.getNombre());
         holder.genero.setText(perfume.getGenero());
     }

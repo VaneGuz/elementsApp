@@ -18,20 +18,23 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import vane.micasa.co.elementsaplication.data.Perfume;
+import vane.micasa.co.elementsaplication.adapter.PerfumesAdapter;
+import vane.micasa.co.elementsaplication.data.PerfumePojo;
 
 /**
  * Created by Michael Garcia on 28/05/2017.
  */
 
 public class ElementsList extends AppCompatActivity {
-    RecyclerView rv;
+    private static View view;
+    private static RecyclerView rv;
+    private static PerfumesAdapter adapter;
     EditText nombre;
     EditText mililitros;
     EditText genero;
     FirebaseDatabase database;
     DatabaseReference perfumeRef;
-    List<Perfume> listPerfume;
+    List<PerfumePojo> listPerfume;
     final FirebaseApp firebaseApp  = FirebaseApp.initializeApp(this);
 
     @Override
@@ -41,17 +44,17 @@ public class ElementsList extends AppCompatActivity {
         nombre = (EditText) findViewById(R.id.nombrePerfume);
         mililitros = (EditText) findViewById(R.id.mililitrosPerfume);
         genero = (EditText) findViewById(R.id.generoPerfume);
+
         rv = (RecyclerView) findViewById(R.id.recycler);
-        final PerfumesAdapter adapter;
-
-
-        rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setHasFixedSize(true);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+
         listPerfume = new ArrayList<>();
 
 
         adapter = new PerfumesAdapter(listPerfume);
         rv.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
         database = database.getInstance();
         perfumeRef = database.getReference(FirebaseReferences.PERFUME_REFERENCE);
@@ -65,7 +68,7 @@ public class ElementsList extends AppCompatActivity {
                 listPerfume.removeAll(listPerfume);
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()
                         ) {
-                    Perfume perfume = snapshot.getValue(Perfume.class);
+                    PerfumePojo perfume = snapshot.getValue(PerfumePojo.class);
                     listPerfume.add(perfume);
 
                 }
@@ -77,20 +80,13 @@ public class ElementsList extends AppCompatActivity {
                 Log.e("LOG", "ERRRROOOOR");
             }
         });
-
-        Log.i("LOG", "entroooooo2");
-
     }
 
 
     public void crearPerfume(View view) {
-        Perfume perfume = new Perfume();
+        PerfumePojo perfume = new PerfumePojo();
         perfume.setNombre(nombre.getText().toString());
         perfume.setGenero(genero.getText().toString());
-
-
         perfumeRef.push().setValue(perfume);
-
-
     }
 }

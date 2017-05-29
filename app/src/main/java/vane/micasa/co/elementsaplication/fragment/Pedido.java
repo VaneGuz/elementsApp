@@ -5,11 +5,29 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import vane.micasa.co.elementsaplication.FirebaseReferences;
+import vane.micasa.co.elementsaplication.adapter.PedidoAdapter;
+import vane.micasa.co.elementsaplication.adapter.PerfumesAdapter;
 import vane.micasa.co.elementsaplication.R;
+import vane.micasa.co.elementsaplication.data.PedidoPojo;
+import vane.micasa.co.elementsaplication.data.PerfumePojo;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,23 +39,22 @@ import vane.micasa.co.elementsaplication.R;
  */
 public class Pedido extends Fragment {
 
-
+    private static View view;
+    private static RecyclerView rv;
+    private static PedidoAdapter adapter;
+    EditText nombre;
+    EditText mililitros;
+    EditText perfume;
+    FirebaseDatabase database;
+    DatabaseReference pedidoRef;
+    List<PedidoPojo> listPedido;
     private OnFragmentInteractionListener mListener;
 
     public Pedido() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Pedido.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Pedido newInstance(String param1, String param2) {
+    public static Pedido newInstance() {
         Pedido fragment = new Pedido();
 
         return fragment;
@@ -52,8 +69,45 @@ public class Pedido extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pedido, container, false);
+        view = inflater.inflate(R.layout.fragment_pedido, container, false);
+        populateRecyclerView();
+        return view;
+    }
+
+    private void populateRecyclerView() {
+        rv = (RecyclerView) view.findViewById(R.id.recycler_pedido);
+        rv.setHasFixedSize(true);
+        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        listPedido = new ArrayList<>();
+
+        adapter = new PedidoAdapter(listPedido);
+        rv.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        database = database.getInstance();
+        pedidoRef = database.getReference(FirebaseReferences.PEDIDO_REFERENCE);
+
+        pedidoRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.i("LOG", dataSnapshot.toString());
+                // String prueba = dataSnapshot.child("nombre").getValue(String.class);
+                listPedido.removeAll(listPedido);
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()
+                        ) {
+                    Log.i("TAG", snapshot.toString());
+                    PedidoPojo pedido = snapshot.getValue(PedidoPojo.class);
+                    listPedido.add(pedido);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("LOG", "ERRRROOOOR");
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event

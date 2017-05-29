@@ -6,6 +6,6 @@ package vane.micasa.co.elementsaplication;
 
 public class FirebaseReferences {
     final public static String PERFUME_REFERENCE = "Perfume";
-    final public static String PEDIDO_REFERENCE = "Pedido ";
+    final public static String PEDIDO_REFERENCE = "Pedido";
 
 }
