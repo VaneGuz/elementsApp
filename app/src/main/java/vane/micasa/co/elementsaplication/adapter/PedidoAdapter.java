@@ -20,18 +20,21 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
     public PedidoAdapter(List<PedidoPojo> listPedido) {
         this.listPedido = listPedido;
     }
-    public static class PedidoViewHolder extends RecyclerView.ViewHolder{
+
+    public static class PedidoViewHolder extends RecyclerView.ViewHolder {
 
         TextView nombre;
         TextView perfume;
         TextView mililitros;
+        TextView fechaEntrega;
 
-        public PedidoViewHolder(View itemView){
+        public PedidoViewHolder(View itemView) {
             super(itemView);
 
-            this.nombre= (TextView) itemView.findViewById(R.id.nombre_pedido);
-            this.perfume= (TextView) itemView.findViewById(R.id.perfume_pedido);
-            this.mililitros= (TextView) itemView.findViewById(R.id.mililitros_pedido);
+            this.nombre = (TextView) itemView.findViewById(R.id.nombre_pedido);
+            this.perfume = (TextView) itemView.findViewById(R.id.perfume_pedido);
+            this.mililitros = (TextView) itemView.findViewById(R.id.mililitros_pedido);
+            this.fechaEntrega = (TextView) itemView.findViewById(R.id.fechaEntrega_pedido);
 
         }
     }
@@ -40,7 +43,7 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
 
     @Override
     public PedidoAdapter.PedidoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_pedido,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_pedido, parent, false);
         PedidoAdapter.PedidoViewHolder holder = new PedidoAdapter.PedidoViewHolder(v);
         return holder;
     }
@@ -48,11 +51,13 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
     @Override
     public void onBindViewHolder(PedidoAdapter.PedidoViewHolder holder, int position) {
         PedidoPojo pedido = listPedido.get(position);
-
+        String str = Long.toString(pedido.getMililitros());
         holder.nombre.setText(pedido.getNombre());
         holder.perfume.setText(pedido.getPerfume());
-        holder.mililitros.setText(pedido.getMililitros().toString());
-     //   holder.genero.setText(pedido.getGenero());
+        holder.mililitros.setText(str);
+        holder.fechaEntrega.setText(pedido.getFechaEntrega());
+
+        //   holder.genero.setText(pedido.getGenero());
     }
 
     @Override

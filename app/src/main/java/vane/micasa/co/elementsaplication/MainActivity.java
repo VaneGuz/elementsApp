@@ -152,6 +152,11 @@ public class MainActivity extends AppCompatActivity
         Log.i("TAG", "crear perfume");
         cat.crearPerfume();
     }
+    public void crearPedido(View view) {
+        PedidoAdd cat = (PedidoAdd) getFragmentManager().findFragmentById(R.id.content_frame);
+        Log.i("TAG", "crear perfume");
+        cat.crearPedido();
+    }
 }
 
 

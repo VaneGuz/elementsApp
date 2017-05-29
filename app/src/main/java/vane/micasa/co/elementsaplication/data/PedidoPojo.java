@@ -7,11 +7,11 @@ package vane.micasa.co.elementsaplication.data;
 public class PedidoPojo {
     private String nombre;
     private String perfume;
-    private Long mililitros;
+    private long mililitros;
     private String fechaEntrega;
 
 
-    public PedidoPojo(String nombre, String perfume, Long mililitros, String fechaEntrega) {
+    public PedidoPojo(String nombre, String perfume, long mililitros, String fechaEntrega) {
         this.nombre = nombre;
         this.perfume = perfume;
         this.mililitros = mililitros;
@@ -37,11 +37,11 @@ public class PedidoPojo {
         this.perfume = perfume;
     }
 
-    public Long getMililitros() {
+    public long getMililitros() {
         return mililitros;
     }
 
-    public void setMililitros(Long mililitros) {
+    public void setMililitros(long mililitros) {
         this.mililitros = mililitros;
     }
 

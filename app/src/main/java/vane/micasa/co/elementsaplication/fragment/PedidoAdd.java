@@ -5,16 +5,29 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import vane.micasa.co.elementsaplication.FirebaseReferences;
 import vane.micasa.co.elementsaplication.R;
+import vane.micasa.co.elementsaplication.data.PedidoPojo;
 
 
 public class PedidoAdd extends Fragment {
-
-
+    private static View view;
+    EditText persona;
+    EditText perfume;
+    EditText mililitros;
+    EditText fechaEntrega;
+    DatabaseReference pedidoRef;
+    FirebaseDatabase database;
     private OnFragmentInteractionListener mListener;
 
     public PedidoAdd() {
@@ -37,8 +50,15 @@ public class PedidoAdd extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pedido_add, container, false);
+        view = inflater.inflate(R.layout.fragment_pedido_add, container, false);
+        persona = (EditText) view.findViewById(R.id.addPersona_pedido);
+        perfume = (EditText) view.findViewById(R.id.addPerfume_pedido);
+        fechaEntrega = (EditText) view.findViewById(R.id.addFechaEntrega_pedido);
+        mililitros= (EditText) view.findViewById(R.id.addMililitros_pedido);
+
+        database = database.getInstance();
+       pedidoRef = database.getReference(FirebaseReferences.PEDIDO_REFERENCE);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -78,6 +98,20 @@ public class PedidoAdd extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void crearPedido() {
+        PedidoPojo pedido = new PedidoPojo();
+        pedido.setNombre(persona.getText().toString());
+        pedido.setPerfume(perfume.getText().toString());
+        pedido.setFechaEntrega(fechaEntrega.getText().toString());
+        pedido.setMililitros(Long.parseLong(mililitros.getText().toString()));
+        //TODO Controlar cuando no se guarda con exito
+        pedidoRef.push().setValue(pedido);
+        Snackbar.make(view, "Pedido creado con éxito", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+        getFragmentManager().beginTransaction().replace(R.id.content_frame, new Pedido()).commit();
+
     }
 
 }
