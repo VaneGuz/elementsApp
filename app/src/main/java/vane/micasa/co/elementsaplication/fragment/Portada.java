@@ -6,17 +6,20 @@ import android.net.Uri;
 import android.os.Bundle;
 
 
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import vane.micasa.co.elementsaplication.MainActivity;
 import vane.micasa.co.elementsaplication.R;
 
 public class Portada extends Fragment {
 
-
+FloatingActionButton fab;
     private OnFragmentInteractionListener mListener;
 
+    private static View view;
     public Portada() {
         // Required empty public constructor
     }
@@ -35,8 +38,13 @@ public class Portada extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        view =inflater.inflate(R.layout.fragment_portada, container, false);
+        fab = ((MainActivity) getActivity()).getFloatingActionButton();
+        if (fab != null) {
+            fab.hide();
+        }
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_portada, container, false);
+        return view;
     }
 
 

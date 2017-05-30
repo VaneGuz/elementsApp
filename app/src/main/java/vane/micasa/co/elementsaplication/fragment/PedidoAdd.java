@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import vane.micasa.co.elementsaplication.FirebaseReferences;
+import vane.micasa.co.elementsaplication.MainActivity;
 import vane.micasa.co.elementsaplication.R;
 import vane.micasa.co.elementsaplication.data.PedidoPojo;
 
@@ -29,6 +31,7 @@ public class PedidoAdd extends Fragment {
     DatabaseReference pedidoRef;
     FirebaseDatabase database;
     private OnFragmentInteractionListener mListener;
+    FloatingActionButton fab;
 
     public PedidoAdd() {
         // Required empty public constructor
@@ -54,10 +57,16 @@ public class PedidoAdd extends Fragment {
         persona = (EditText) view.findViewById(R.id.addPersona_pedido);
         perfume = (EditText) view.findViewById(R.id.addPerfume_pedido);
         fechaEntrega = (EditText) view.findViewById(R.id.addFechaEntrega_pedido);
-        mililitros= (EditText) view.findViewById(R.id.addMililitros_pedido);
-
+        mililitros = (EditText) view.findViewById(R.id.addMililitros_pedido);
+        fab = ((MainActivity) getActivity()).getFloatingActionButton();
+        if (fab != null) {
+           fab.hide();
+        }
         database = database.getInstance();
-       pedidoRef = database.getReference(FirebaseReferences.PEDIDO_REFERENCE);
+        pedidoRef = database.getReference(FirebaseReferences.PEDIDO_REFERENCE);
+        if (fab != null) {
+            fab.hide();
+        }
         return view;
     }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vane.micasa.co.elementsaplication.FirebaseReferences;
+import vane.micasa.co.elementsaplication.MainActivity;
 import vane.micasa.co.elementsaplication.adapter.PerfumesAdapter;
 import vane.micasa.co.elementsaplication.R;
 import vane.micasa.co.elementsaplication.data.PerfumePojo;
@@ -44,6 +46,7 @@ public class Catalogo extends Fragment {
     FirebaseDatabase database;
     DatabaseReference perfumeRef;
     List<PerfumePojo> listPerfume;
+    FloatingActionButton fab;
 //    final FirebaseApp firebaseApp  = FirebaseApp.initializeApp(this);
 
     private OnFragmentInteractionListener mListener;
@@ -69,6 +72,11 @@ public class Catalogo extends Fragment {
 //        view = inflater.inflate(R.layout.fragment_catalogo, container, false);
         view = inflater.inflate(R.layout.fragment_catalogo, container, false);
         populateRecyclerView();
+        fab = ((MainActivity) getActivity()).getFloatingActionButton();
+        if (fab != null) {
+            fab.setImageResource(R.drawable.ic_mas);
+            fab.show();
+        }
         return view;
     }
 

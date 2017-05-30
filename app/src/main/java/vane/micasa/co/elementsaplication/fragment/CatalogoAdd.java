@@ -6,6 +6,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import vane.micasa.co.elementsaplication.FirebaseReferences;
+import vane.micasa.co.elementsaplication.MainActivity;
 import vane.micasa.co.elementsaplication.R;
 import vane.micasa.co.elementsaplication.data.PerfumePojo;
 
@@ -37,7 +39,7 @@ public class CatalogoAdd extends Fragment {
     EditText mililitros;
     DatabaseReference perfumeRef;
     FirebaseDatabase database;
-
+    FloatingActionButton fab;
     private static View view;
 
     private OnFragmentInteractionListener mListener;
@@ -69,7 +71,10 @@ public class CatalogoAdd extends Fragment {
         fechaDisponible = (EditText) view.findViewById(R.id.addFechaDisponible_catalogo);
         fechaPreparacion = (EditText) view.findViewById(R.id.addFechaPreparacion_catalogo);
         mililitros = (EditText) view.findViewById(R.id.addMililitros_catalogo);
-
+        fab = ((MainActivity) getActivity()).getFloatingActionButton();
+        if (fab != null) {
+            fab.hide();
+        }
         database = database.getInstance();
         perfumeRef = database.getReference(FirebaseReferences.PERFUME_REFERENCE);
         return view;
@@ -113,6 +118,7 @@ public class CatalogoAdd extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
     public void crearPerfume() {
         PerfumePojo perfume = new PerfumePojo();
         perfume.setNombre(nombre.getText().toString());
@@ -123,7 +129,7 @@ public class CatalogoAdd extends Fragment {
         perfume.setFechaPreparacion(fechaPreparacion.getText().toString());
         Log.i("TAG", "crear perfume fragment");
         //TODO Controlar cuando no se guarda con exito
-         perfumeRef.push().setValue(perfume);
+        perfumeRef.push().setValue(perfume);
         Snackbar.make(view, "Perfume creado con éxito", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
         getFragmentManager().beginTransaction().replace(R.id.content_frame, new Catalogo()).commit();

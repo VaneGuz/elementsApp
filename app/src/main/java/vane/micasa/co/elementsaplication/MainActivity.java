@@ -2,6 +2,7 @@ package vane.micasa.co.elementsaplication;
 
 
 import android.app.FragmentManager;
+import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.app.Fragment;
@@ -152,10 +153,33 @@ public class MainActivity extends AppCompatActivity
         Log.i("TAG", "crear perfume");
         cat.crearPerfume();
     }
+
     public void crearPedido(View view) {
         PedidoAdd cat = (PedidoAdd) getFragmentManager().findFragmentById(R.id.content_frame);
         Log.i("TAG", "crear perfume");
         cat.crearPedido();
+    }
+    public void mostrarCatalogo(View view) {
+            fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new Catalogo()).commit();
+    }
+    public void mostrarPedido(View view) {
+        fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, new Pedido()).commit();
+    }
+
+    public void showFloatingActionButton() {
+        fab.show();
+    }
+
+    ;
+
+    public void hideFloatingActionButton() {
+        fab.hide();
+    }
+
+    public FloatingActionButton getFloatingActionButton() {
+        return fab;
     }
 }
 

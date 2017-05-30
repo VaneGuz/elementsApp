@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vane.micasa.co.elementsaplication.FirebaseReferences;
+import vane.micasa.co.elementsaplication.MainActivity;
 import vane.micasa.co.elementsaplication.adapter.PedidoAdapter;
 import vane.micasa.co.elementsaplication.adapter.PerfumesAdapter;
 import vane.micasa.co.elementsaplication.R;
@@ -48,6 +50,7 @@ public class Pedido extends Fragment {
     FirebaseDatabase database;
     DatabaseReference pedidoRef;
     List<PedidoPojo> listPedido;
+    FloatingActionButton fab;
     private OnFragmentInteractionListener mListener;
 
     public Pedido() {
@@ -70,6 +73,13 @@ public class Pedido extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_pedido, container, false);
+
+        fab = ((MainActivity) getActivity()).getFloatingActionButton();
+        if (fab != null) {
+            fab.setImageResource(R.drawable.ic_mas);
+            fab.show();
+        }
+
         populateRecyclerView();
         return view;
     }
