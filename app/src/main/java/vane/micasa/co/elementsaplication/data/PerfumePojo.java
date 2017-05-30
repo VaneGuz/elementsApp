@@ -10,9 +10,9 @@ public class PerfumePojo {
     private String casa;
     private String fechaPreparacion;
     private String fechaDisponible;
-    private Long mililitrosTotal;
+    private long mililitrosTotal;
 
-    public PerfumePojo(String nombre, String genero, String casa, String fechaPreparacion, String fechaDisponible, Long mililitrosTotal) {
+    public PerfumePojo(String nombre, String genero, String casa, String fechaPreparacion, String fechaDisponible, long mililitrosTotal) {
         this.nombre = nombre;
         this.genero = genero;
         this.casa = casa;
@@ -45,11 +45,11 @@ public class PerfumePojo {
         this.fechaDisponible = fechaDisponible;
     }
 
-    public Long getMililitrosTotal() {
+    public long getMililitrosTotal() {
         return mililitrosTotal;
     }
 
-    public void setMililitrosTotal(Long mililitrosTotal) {
+    public void setMililitrosTotal(long mililitrosTotal) {
         this.mililitrosTotal = mililitrosTotal;
     }
 

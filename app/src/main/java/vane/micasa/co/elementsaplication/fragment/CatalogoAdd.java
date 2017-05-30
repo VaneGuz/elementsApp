@@ -115,8 +115,7 @@ public class CatalogoAdd extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+          void onFragmentInteraction(Uri uri);
     }
 
     public void crearPerfume() {
@@ -129,6 +128,7 @@ public class CatalogoAdd extends Fragment {
         perfume.setFechaPreparacion(fechaPreparacion.getText().toString());
         Log.i("TAG", "crear perfume fragment");
         //TODO Controlar cuando no se guarda con exito
+        //TODO Controlar cuando la info es vacia
         perfumeRef.push().setValue(perfume);
         Snackbar.make(view, "Perfume creado con éxito", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
