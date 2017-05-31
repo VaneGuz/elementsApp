@@ -1,9 +1,14 @@
 package vane.micasa.co.elementsaplication.adapter;
 
+import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.List;
@@ -17,16 +22,21 @@ import vane.micasa.co.elementsaplication.data.PedidoPojo;
 
 public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoViewHolder> {
 
+    private static ClickListener clickListener;
+    private List<PedidoPojo> listPedido;
+static Context context;
     public PedidoAdapter(List<PedidoPojo> listPedido) {
+
         this.listPedido = listPedido;
     }
 
-    public static class PedidoViewHolder extends RecyclerView.ViewHolder {
+    public static class PedidoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
         TextView nombre;
         TextView perfume;
         TextView mililitros;
         TextView fechaEntrega;
+        SwitchCompat aSwitch;
 
         public PedidoViewHolder(View itemView) {
             super(itemView);
@@ -35,11 +45,39 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
             this.perfume = (TextView) itemView.findViewById(R.id.perfume_pedido);
             this.mililitros = (TextView) itemView.findViewById(R.id.mililitros_pedido);
             this.fechaEntrega = (TextView) itemView.findViewById(R.id.fechaEntrega_pedido);
+            aSwitch= (SwitchCompat) itemView.findViewById(R.id.switcher);
+            aSwitch.setOnClickListener(this);
+//            itemView.setOnLongClickListener(this);
+        }
+        @Override    //paso2
+        public void onClick(View v) {
+            clickListener.onItemClick(getAdapterPosition(), v);
+             mostrarDetalle(getAdapterPosition(), v);
+            Log.i("ENTROO ", "onclick");
+        }
 
+        private void mostrarDetalle(int adapterPosition, View v) {
+            Snackbar.make(v, "PEDIDO SWITCH CLICKEADO con éxito", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            Log.i("ENTROO ", "ONLONGCLICK  ENTROOOO");
+            clickListener.onItemLongClick(getAdapterPosition(), v);
+            return false;
         }
     }
+    public void setOnItemClickListener(ClickListener clickListener) {
+        Log.i("ENTROO ", "entro a setitemclick en EventsAdapter");
+        PedidoAdapter.clickListener = clickListener;
+    }
 
-    List<PedidoPojo> listPedido;
+    public interface ClickListener {
+        void onItemClick(int position, View v);
+        void onItemLongClick(int position, View v);
+    }
+
 
     @Override
     public PedidoAdapter.PedidoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -56,7 +94,6 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
         holder.perfume.setText(pedido.getPerfume());
         holder.mililitros.setText(str);
         holder.fechaEntrega.setText(pedido.getFechaEntrega());
-
         //   holder.genero.setText(pedido.getGenero());
     }
 
@@ -64,6 +101,8 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
     public int getItemCount() {
         return listPedido.size();
     }
+
+
 
 
 }

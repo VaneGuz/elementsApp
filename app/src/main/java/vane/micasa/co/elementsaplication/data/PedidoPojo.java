@@ -9,7 +9,8 @@ public class PedidoPojo {
     private String perfume;
     private long mililitros;
     private String fechaEntrega;
-
+    private int pagado;
+    private long abono;
 
     public PedidoPojo(String nombre, String perfume, long mililitros, String fechaEntrega) {
         this.nombre = nombre;

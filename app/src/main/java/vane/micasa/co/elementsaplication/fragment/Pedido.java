@@ -67,6 +67,7 @@ public class Pedido extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
     }
 
     @Override
@@ -81,6 +82,7 @@ public class Pedido extends Fragment {
         }
 
         populateRecyclerView();
+
         return view;
     }
 
@@ -116,6 +118,18 @@ public class Pedido extends Fragment {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e("LOG", "ERRRROOOOR");
+            }
+        });
+
+        adapter.setOnItemClickListener(new PedidoAdapter.ClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                Log.i("TAG", "onItemClick position: " + position);
+            }
+
+            @Override
+            public void onItemLongClick(int position, View v) {
+                Log.i("TAG", "onItemLongClick pos = " + position);
             }
         });
     }
