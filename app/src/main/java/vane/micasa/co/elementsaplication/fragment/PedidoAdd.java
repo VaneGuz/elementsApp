@@ -47,7 +47,7 @@ public class PedidoAdd extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        ((MainActivity) getActivity()).setActionBarTitle("Nuevo Pedido");
     }
 
     @Override

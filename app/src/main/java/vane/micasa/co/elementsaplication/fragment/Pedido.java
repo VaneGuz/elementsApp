@@ -66,7 +66,8 @@ public class Pedido extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        ((MainActivity) getActivity()).setActionBarTitle("Pedidos");
+        listPedido = new ArrayList<>();
 
     }
 
@@ -74,15 +75,12 @@ public class Pedido extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_pedido, container, false);
-
+        populateRecyclerView();
         fab = ((MainActivity) getActivity()).getFloatingActionButton();
         if (fab != null) {
             fab.setImageResource(R.drawable.ic_mas);
             fab.show();
         }
-
-        populateRecyclerView();
-
         return view;
     }
 
@@ -91,8 +89,6 @@ public class Pedido extends Fragment {
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        listPedido = new ArrayList<>();
-
         adapter = new PedidoAdapter(listPedido);
         rv.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -100,6 +96,22 @@ public class Pedido extends Fragment {
         database = database.getInstance();
         pedidoRef = database.getReference(FirebaseReferences.PEDIDO_REFERENCE);
 
+        updateList();
+
+        adapter.setOnItemClickListener(new PedidoAdapter.ClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                Log.i("TAG", "onItemClick position: " + position);
+            }
+
+            @Override
+            public void onItemLongClick(int position, View v) {
+                Log.i("TAG", "onItemLongClick pos = " + position);
+            }
+        });
+    }
+
+    public void updateList() {
         pedidoRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -120,18 +132,10 @@ public class Pedido extends Fragment {
                 Log.e("LOG", "ERRRROOOOR");
             }
         });
+    }
 
-        adapter.setOnItemClickListener(new PedidoAdapter.ClickListener() {
-            @Override
-            public void onItemClick(int position, View v) {
-                Log.i("TAG", "onItemClick position: " + position);
-            }
-
-            @Override
-            public void onItemLongClick(int position, View v) {
-                Log.i("TAG", "onItemLongClick pos = " + position);
-            }
-        });
+    public List<PedidoPojo> getListPedido() {
+        return listPedido;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

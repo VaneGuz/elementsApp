@@ -28,6 +28,7 @@ public class PerfumesAdapter extends RecyclerView.Adapter<PerfumesAdapter.Perfum
         TextView fechaPreparacion;
         TextView fechaDisponible;
 
+
         public PerfumesViewHolder(View itemView){
             super(itemView);
             this.nombre = (TextView) itemView.findViewById(R.id.nombre_catalogo);

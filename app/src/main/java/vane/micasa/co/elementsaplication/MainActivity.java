@@ -18,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import vane.micasa.co.elementsaplication.data.PerfumePojo;
 import vane.micasa.co.elementsaplication.fragment.CatalogoAdd;
 import vane.micasa.co.elementsaplication.fragment.ContableAdd;
 import vane.micasa.co.elementsaplication.fragment.Catalogo;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity
     private FragmentManager fragmentManager;
     FloatingActionButton fab;
     Fragment pedidoFrag;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -53,6 +57,9 @@ public class MainActivity extends AppCompatActivity
 
         displaySelectedScreen(R.id.nav_portada);
 
+    }
+    public void setActionBarTitle(String title){
+        getSupportActionBar().setTitle(title);
     }
 
     @Override

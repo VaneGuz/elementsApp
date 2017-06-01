@@ -24,19 +24,21 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
 
     private static ClickListener clickListener;
     private List<PedidoPojo> listPedido;
-static Context context;
+    static Context context;
+
     public PedidoAdapter(List<PedidoPojo> listPedido) {
 
         this.listPedido = listPedido;
     }
 
-    public static class PedidoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
+    public static class PedidoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         TextView nombre;
         TextView perfume;
         TextView mililitros;
         TextView fechaEntrega;
         SwitchCompat aSwitch;
+
 
         public PedidoViewHolder(View itemView) {
             super(itemView);
@@ -45,20 +47,31 @@ static Context context;
             this.perfume = (TextView) itemView.findViewById(R.id.perfume_pedido);
             this.mililitros = (TextView) itemView.findViewById(R.id.mililitros_pedido);
             this.fechaEntrega = (TextView) itemView.findViewById(R.id.fechaEntrega_pedido);
-            aSwitch= (SwitchCompat) itemView.findViewById(R.id.switcher);
+            aSwitch = (SwitchCompat) itemView.findViewById(R.id.switcher);
             aSwitch.setOnClickListener(this);
 //            itemView.setOnLongClickListener(this);
         }
+
         @Override    //paso2
         public void onClick(View v) {
             clickListener.onItemClick(getAdapterPosition(), v);
-             mostrarDetalle(getAdapterPosition(), v);
+
+            mostrarDetalle(getAdapterPosition(), v);
             Log.i("ENTROO ", "onclick");
         }
 
         private void mostrarDetalle(int adapterPosition, View v) {
-            Snackbar.make(v, "PEDIDO SWITCH CLICKEADO con éxito", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            if (aSwitch.isChecked()) {
+                Snackbar.make(v, "PEDIDO pagado", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
+
+            } else {
+                Snackbar.make(v, "PEDIDO no pago", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
+
+            }
         }
 
         @Override
@@ -68,6 +81,7 @@ static Context context;
             return false;
         }
     }
+
     public void setOnItemClickListener(ClickListener clickListener) {
         Log.i("ENTROO ", "entro a setitemclick en EventsAdapter");
         PedidoAdapter.clickListener = clickListener;
@@ -75,6 +89,7 @@ static Context context;
 
     public interface ClickListener {
         void onItemClick(int position, View v);
+
         void onItemLongClick(int position, View v);
     }
 
@@ -94,6 +109,11 @@ static Context context;
         holder.perfume.setText(pedido.getPerfume());
         holder.mililitros.setText(str);
         holder.fechaEntrega.setText(pedido.getFechaEntrega());
+        if (pedido.getEstado() == 1) {
+            holder.aSwitch.setChecked(true);
+        } else {
+            holder.aSwitch.setChecked(false);
+        }
         //   holder.genero.setText(pedido.getGenero());
     }
 
@@ -101,8 +121,6 @@ static Context context;
     public int getItemCount() {
         return listPedido.size();
     }
-
-
 
 
 }

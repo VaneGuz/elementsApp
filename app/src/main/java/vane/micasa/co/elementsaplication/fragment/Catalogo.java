@@ -57,12 +57,14 @@ public class Catalogo extends Fragment {
 
     public static Catalogo newInstance() {
         Catalogo fragment = new Catalogo();
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((MainActivity) getActivity()).setActionBarTitle("Catalogo");
 
     }
 

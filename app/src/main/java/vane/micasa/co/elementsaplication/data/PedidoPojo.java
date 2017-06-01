@@ -9,14 +9,32 @@ public class PedidoPojo {
     private String perfume;
     private long mililitros;
     private String fechaEntrega;
-    private int pagado;
-    private long abono;
+    private int estado;
+    private long valor;
 
-    public PedidoPojo(String nombre, String perfume, long mililitros, String fechaEntrega) {
+    public PedidoPojo(String nombre, String perfume, long mililitros, String fechaEntrega, int estado, long valor) {
         this.nombre = nombre;
         this.perfume = perfume;
         this.mililitros = mililitros;
         this.fechaEntrega = fechaEntrega;
+        this.estado = estado;
+        this.valor = valor;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
+    public long getValor() {
+        return valor;
+    }
+
+    public void setValor(long valor) {
+        this.valor = valor;
     }
 
     public PedidoPojo() {
