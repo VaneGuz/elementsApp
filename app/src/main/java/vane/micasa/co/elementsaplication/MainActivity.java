@@ -1,12 +1,15 @@
 package vane.micasa.co.elementsaplication;
 
 
+import android.app.DialogFragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.app.Fragment;
 
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -19,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import vane.micasa.co.elementsaplication.data.PerfumePojo;
+import vane.micasa.co.elementsaplication.dialog.DateDialog;
 import vane.micasa.co.elementsaplication.fragment.CatalogoAdd;
 import vane.micasa.co.elementsaplication.fragment.ContableAdd;
 import vane.micasa.co.elementsaplication.fragment.Catalogo;
@@ -41,8 +45,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -179,7 +181,13 @@ public class MainActivity extends AppCompatActivity
         fab.show();
     }
 
-    ;
+    public void showTimePickerDialog(View v) {
+        Snackbar.make(v, "show date", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+
+        DialogFragment newFragment = new DateDialog();
+        newFragment.show(getFragmentManager(), "datePicker");
+    }
 
     public void hideFloatingActionButton() {
         fab.hide();

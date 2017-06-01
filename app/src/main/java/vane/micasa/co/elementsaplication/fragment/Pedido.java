@@ -1,11 +1,13 @@
 package vane.micasa.co.elementsaplication.fragment;
 
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -30,6 +32,7 @@ import vane.micasa.co.elementsaplication.adapter.PerfumesAdapter;
 import vane.micasa.co.elementsaplication.R;
 import vane.micasa.co.elementsaplication.data.PedidoPojo;
 import vane.micasa.co.elementsaplication.data.PerfumePojo;
+import vane.micasa.co.elementsaplication.dialog.DateDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -175,5 +178,13 @@ public class Pedido extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void showTimePickerDialog(View v) {
+        Snackbar.make(v, "show date pedido", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+
+        DialogFragment newFragment = new DateDialog();
+        newFragment.show(getFragmentManager(), "datePicker");
     }
 }

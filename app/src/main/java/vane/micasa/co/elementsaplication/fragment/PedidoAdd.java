@@ -1,7 +1,9 @@
 package vane.micasa.co.elementsaplication.fragment;
 
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -16,10 +18,15 @@ import android.widget.EditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import vane.micasa.co.elementsaplication.FirebaseReferences;
 import vane.micasa.co.elementsaplication.MainActivity;
 import vane.micasa.co.elementsaplication.R;
 import vane.micasa.co.elementsaplication.data.PedidoPojo;
+import vane.micasa.co.elementsaplication.dialog.DateDialog;
 
 
 public class PedidoAdd extends Fragment {
@@ -32,6 +39,8 @@ public class PedidoAdd extends Fragment {
     FirebaseDatabase database;
     private OnFragmentInteractionListener mListener;
     FloatingActionButton fab;
+
+    SharedPreferences sharedPref;
 
     public PedidoAdd() {
         // Required empty public constructor
@@ -48,6 +57,7 @@ public class PedidoAdd extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((MainActivity) getActivity()).setActionBarTitle("Nuevo Pedido");
+        sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
     }
 
     @Override
@@ -68,6 +78,7 @@ public class PedidoAdd extends Fragment {
             fab.hide();
         }
         return view;
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -110,6 +121,15 @@ public class PedidoAdd extends Fragment {
     }
 
     public void crearPedido() {
+         String dtStart = getResources().getString(R.string.date);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = format.parse(dtStart);
+            System.out.println(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         PedidoPojo pedido = new PedidoPojo();
         pedido.setNombre(persona.getText().toString());
         pedido.setPerfume(perfume.getText().toString());
@@ -123,4 +143,12 @@ public class PedidoAdd extends Fragment {
 
     }
 
+
+    public void showTimePickerDialog(View v) {
+        Snackbar.make(v, "show date pedidoadd", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+
+        DialogFragment newFragment = new DateDialog();
+        newFragment.show(getFragmentManager(), "datePicker");
+    }
 }

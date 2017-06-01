@@ -121,6 +121,12 @@
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_fecha" />
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha"
+                android:onClick="showTimePickerDialog" />
+
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/til_fechaEntrega"
                 android:layout_width="match_parent"
