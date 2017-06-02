@@ -57,8 +57,7 @@ public class PedidoAdd extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((MainActivity) getActivity()).setActionBarTitle("Nuevo Pedido");
-        sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-    }
+           }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,13 +71,18 @@ public class PedidoAdd extends Fragment {
         if (fab != null) {
            fab.hide();
         }
+        fechaEntrega.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                DialogFragment newFragment = new DateDialog();
+                newFragment.show(getFragmentManager(), "datePicker");
+            }
+        });
         database = database.getInstance();
         pedidoRef = database.getReference(FirebaseReferences.PEDIDO_REFERENCE);
         if (fab != null) {
             fab.hide();
         }
         return view;
-
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -140,15 +144,12 @@ public class PedidoAdd extends Fragment {
         Snackbar.make(view, "Pedido creado con éxito", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
         getFragmentManager().beginTransaction().replace(R.id.content_frame, new Pedido()).commit();
-
     }
 
-
-    public void showTimePickerDialog(View v) {
-        Snackbar.make(v, "show date pedidoadd", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
-
-        DialogFragment newFragment = new DateDialog();
-        newFragment.show(getFragmentManager(), "datePicker");
-    }
+//    public void showTimePickerDialog(View v) {
+//        Snackbar.make(v, "show date pedidoadd", Snackbar.LENGTH_LONG)
+//                .setAction("Action", null).show();
+//        DialogFragment newFragment = new DateDialog();
+//        newFragment.show(getFragmentManager(), "datePicker");
+//    }
 }

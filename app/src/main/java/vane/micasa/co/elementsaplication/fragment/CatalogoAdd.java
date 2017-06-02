@@ -1,5 +1,6 @@
 package vane.micasa.co.elementsaplication.fragment;
 
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -21,6 +22,9 @@ import vane.micasa.co.elementsaplication.FirebaseReferences;
 import vane.micasa.co.elementsaplication.MainActivity;
 import vane.micasa.co.elementsaplication.R;
 import vane.micasa.co.elementsaplication.data.PerfumePojo;
+import vane.micasa.co.elementsaplication.dialog.DateDialog;
+import vane.micasa.co.elementsaplication.dialog.DateFechaDisp;
+import vane.micasa.co.elementsaplication.dialog.DateFechaPrepa;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,6 +79,19 @@ public class CatalogoAdd extends Fragment {
         if (fab != null) {
             fab.hide();
         }
+        fechaDisponible.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                DialogFragment newFragment = new DateFechaDisp();
+                newFragment.show(getFragmentManager(), "datePicker");
+            }
+        });
+
+        fechaPreparacion.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                DialogFragment newFragment = new DateFechaPrepa();
+                newFragment.show(getFragmentManager(), "datePicker");
+            }
+        });
         database = database.getInstance();
         perfumeRef = database.getReference(FirebaseReferences.PERFUME_REFERENCE);
         return view;

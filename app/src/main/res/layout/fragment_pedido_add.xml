@@ -121,26 +121,23 @@
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_fecha" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Fecha"
-                android:onClick="showTimePickerDialog" />
-
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/til_fechaEntrega"
+            android:id="@+id/til_fechaEntrega"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+          >
+
+
+            <EditText
+                android:id="@+id/addFechaEntrega_pedido"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="32dp">
-
-
-                <EditText
-                    android:id="@+id/addFechaEntrega_pedido"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Fecha entrega"
-                    android:inputType="date"
-                    android:textSize="20dp" />
+                android:focusable="false"
+                android:hint="Fecha entrega"
+                android:inputType="date"
+                android:onClick="showTimePickerDialog"
+                android:textSize="20dp" />
 
 
             </android.support.design.widget.TextInputLayout>
@@ -174,6 +171,5 @@
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
-
     </LinearLayout>
 </ScrollView>

@@ -1,4 +1,5 @@
 package vane.micasa.co.elementsaplication.fragment;
+
 import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
@@ -96,6 +97,14 @@ public class Catalogo extends Fragment {
         database = database.getInstance();
         perfumeRef = database.getReference(FirebaseReferences.PERFUME_REFERENCE);
 
+        updateList();
+    }
+
+    public List<PerfumePojo> getListPerfume() {
+        return listPerfume;
+    }
+
+    public void updateList() {
         perfumeRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -105,8 +114,8 @@ public class Catalogo extends Fragment {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()
                         ) {
                     PerfumePojo perfume = snapshot.getValue(PerfumePojo.class);
+                    perfume.setKey(snapshot.getKey());
                     listPerfume.add(perfume);
-
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -116,6 +125,7 @@ public class Catalogo extends Fragment {
                 Log.e("LOG", "ERRRROOOOR");
             }
         });
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

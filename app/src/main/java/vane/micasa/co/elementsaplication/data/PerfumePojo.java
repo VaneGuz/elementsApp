@@ -11,14 +11,24 @@ public class PerfumePojo {
     private String fechaPreparacion;
     private String fechaDisponible;
     private long mililitrosTotal;
+    private String key;
 
-    public PerfumePojo(String nombre, String genero, String casa, String fechaPreparacion, String fechaDisponible, long mililitrosTotal) {
+    public PerfumePojo(String nombre, String genero, String casa, String fechaPreparacion, String fechaDisponible, long mililitrosTotal, String key) {
         this.nombre = nombre;
         this.genero = genero;
         this.casa = casa;
         this.fechaPreparacion = fechaPreparacion;
         this.fechaDisponible = fechaDisponible;
         this.mililitrosTotal = mililitrosTotal;
+        this.key = key;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getCasa() {

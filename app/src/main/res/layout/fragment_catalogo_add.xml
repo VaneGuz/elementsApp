@@ -162,7 +162,9 @@
                     android:layout_height="wrap_content"
                     android:hint="Fecha preparación"
                     android:inputType="date"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:focusable="false"
+                    android:onClick="showTimePickerDialog" />
 
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
@@ -193,7 +195,9 @@
                     android:layout_height="wrap_content"
                     android:hint="Fecha disponible"
                     android:inputType="date"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:focusable="false"
+                    android:onClick="showTimePickerDialog" />
 
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>

@@ -11,15 +11,26 @@ public class PedidoPojo {
     private String fechaEntrega;
     private int estado;
     private long valor;
+ private String key;
 
-    public PedidoPojo(String nombre, String perfume, long mililitros, String fechaEntrega, int estado, long valor) {
+    public PedidoPojo(String nombre, String perfume, long mililitros, String fechaEntrega, int estado, long valor, String key) {
         this.nombre = nombre;
         this.perfume = perfume;
         this.mililitros = mililitros;
         this.fechaEntrega = fechaEntrega;
         this.estado = estado;
         this.valor = valor;
+        this.key = key;
     }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
 
     public int getEstado() {
         return estado;

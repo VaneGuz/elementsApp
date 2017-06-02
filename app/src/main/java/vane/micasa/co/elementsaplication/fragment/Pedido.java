@@ -123,8 +123,9 @@ public class Pedido extends Fragment {
                 listPedido.removeAll(listPedido);
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()
                         ) {
-                    Log.i("TAG", snapshot.toString());
+
                     PedidoPojo pedido = snapshot.getValue(PedidoPojo.class);
+                    pedido.setKey(snapshot.getKey());
                     listPedido.add(pedido);
                 }
                 adapter.notifyDataSetChanged();
