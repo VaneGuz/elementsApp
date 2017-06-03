@@ -57,7 +57,7 @@ public class PedidoAdd extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((MainActivity) getActivity()).setActionBarTitle("Nuevo Pedido");
-           }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,7 +69,7 @@ public class PedidoAdd extends Fragment {
         mililitros = (EditText) view.findViewById(R.id.addMililitros_pedido);
         fab = ((MainActivity) getActivity()).getFloatingActionButton();
         if (fab != null) {
-           fab.hide();
+            fab.hide();
         }
         fechaEntrega.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -124,22 +124,13 @@ public class PedidoAdd extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void crearPedido() {
-         String dtStart = getResources().getString(R.string.date);
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            Date date = format.parse(dtStart);
-            System.out.println(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
+    public void crearPedido() throws ParseException {
         PedidoPojo pedido = new PedidoPojo();
         pedido.setNombre(persona.getText().toString());
         pedido.setPerfume(perfume.getText().toString());
         pedido.setFechaEntrega(fechaEntrega.getText().toString());
         pedido.setMililitros(Long.parseLong(mililitros.getText().toString()));
-        //TODO Controlar cuando no se guarda con exito
+        //TODO Controlar cuando no se guarda con exito o no se ingresan registros
         pedidoRef.push().setValue(pedido);
         Snackbar.make(view, "Pedido creado con éxito", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();

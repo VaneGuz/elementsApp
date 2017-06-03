@@ -3,8 +3,6 @@ package vane.micasa.co.elementsaplication;
 
 import android.app.DialogFragment;
 import android.app.FragmentManager;
-import android.content.Context;
-import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.app.Fragment;
@@ -21,7 +19,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import vane.micasa.co.elementsaplication.data.PerfumePojo;
+import java.text.ParseException;
+
 import vane.micasa.co.elementsaplication.dialog.DateDialog;
 import vane.micasa.co.elementsaplication.fragment.CatalogoAdd;
 import vane.micasa.co.elementsaplication.fragment.ContableAdd;
@@ -29,7 +28,7 @@ import vane.micasa.co.elementsaplication.fragment.Catalogo;
 import vane.micasa.co.elementsaplication.fragment.Contable;
 import vane.micasa.co.elementsaplication.fragment.Pedido;
 import vane.micasa.co.elementsaplication.fragment.PedidoAdd;
-import vane.micasa.co.elementsaplication.fragment.Portada;
+import vane.micasa.co.elementsaplication.fragment.PedidoPortada;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -112,7 +111,7 @@ public class MainActivity extends AppCompatActivity
         //initializing the fragment object which is selected
         switch (itemId) {
             case R.id.nav_portada:
-                fragment = new Portada();
+                fragment = new PedidoPortada();
                 break;
             case R.id.nav_pedido:
                 fragment = new Pedido();
@@ -122,6 +121,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_catalogo:
                 fragment = new Catalogo();
+                break;
+            case R.id.nav_about:
+                fragment = new PedidoPortada();
                 break;
         }
 
@@ -138,7 +140,7 @@ public class MainActivity extends AppCompatActivity
     public void onFABClick(View view) {
         Fragment frag = getFragmentManager().findFragmentById(R.id.content_frame);
 
-        if (frag instanceof Portada) {
+        if (frag instanceof PedidoPortada) {
             Log.i("TAG", "encontrado el actual fragment portada");
         } else if (frag instanceof Pedido) {
             fragment = new PedidoAdd();
@@ -163,7 +165,7 @@ public class MainActivity extends AppCompatActivity
         cat.crearPerfume();
     }
 
-    public void crearPedido(View view) {
+    public void crearPedido(View view) throws ParseException {
         PedidoAdd cat = (PedidoAdd) getFragmentManager().findFragmentById(R.id.content_frame);
         Log.i("TAG", "crear perfume");
         cat.crearPedido();

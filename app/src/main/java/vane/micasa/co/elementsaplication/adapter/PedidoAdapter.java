@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import vane.micasa.co.elementsaplication.R;
@@ -25,6 +26,7 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
     private static ClickListener clickListener;
     private List<PedidoPojo> listPedido;
     static Context context;
+    private String fecha;
 
     public PedidoAdapter(List<PedidoPojo> listPedido) {
 
@@ -38,7 +40,7 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
         TextView mililitros;
         TextView fechaEntrega;
         SwitchCompat aSwitch;
-
+        String fecha;
 
         public PedidoViewHolder(View itemView) {
             super(itemView);

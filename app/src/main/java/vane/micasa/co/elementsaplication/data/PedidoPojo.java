@@ -1,5 +1,7 @@
 package vane.micasa.co.elementsaplication.data;
 
+import java.util.Date;
+
 /**
  * Created by Michael Garcia on 10/05/2017.
  */
