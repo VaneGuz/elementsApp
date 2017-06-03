@@ -11,14 +11,19 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import vane.micasa.co.elementsaplication.R;
 import vane.micasa.co.elementsaplication.data.PedidoPojo;
+import vane.micasa.co.elementsaplication.fragment.Pedido;
 
 /**
  * Created by Michael Garcia on 29/05/2017.
@@ -30,12 +35,13 @@ public class PedidoPortadaAdapter extends RecyclerView.Adapter<PedidoPortadaAdap
     private List<PedidoPojo> listPedidoPortada;
     private Date fecha;
 
+
     public PedidoPortadaAdapter(List<PedidoPojo> listPedidoPortada) {
 
         this.listPedidoPortada = listPedidoPortada;
     }
 
-    public static class PedidoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    public class PedidoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         TextView nombre;
         TextView perfume;
@@ -60,23 +66,10 @@ public class PedidoPortadaAdapter extends RecyclerView.Adapter<PedidoPortadaAdap
         @Override    //paso2
         public void onClick(View v) {
             clickListener.onItemClick(getAdapterPosition(), v);
-            //mostrarDetalle(getAdapterPosition(), v);
+
             Log.i("ENTROO ", "onclick");
         }
-//
-//        private void mostrarDetalle(int adapterPosition, View v) {
-//            if (aSwitch.isChecked()) {
-//                Snackbar.make(v, "PEDIDO pagado", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//
-//
-//            } else {
-//                Snackbar.make(v, "PEDIDO no pago", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//
-//
-//            }
-//        }
+
 
         @Override
         public boolean onLongClick(View v) {
@@ -85,6 +78,8 @@ public class PedidoPortadaAdapter extends RecyclerView.Adapter<PedidoPortadaAdap
             return false;
         }
     }
+
+
 
     public void setOnItemClickListener(ClickListener clickListener) {
         Log.i("ENTROO ", "entro a setitemclick en EventsAdapter");

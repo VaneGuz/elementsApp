@@ -11,8 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import vane.micasa.co.elementsaplication.R;
 import vane.micasa.co.elementsaplication.data.PedidoPojo;
@@ -26,21 +30,25 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
     private static ClickListener clickListener;
     private List<PedidoPojo> listPedido;
     static Context context;
-    private String fecha;
+    private SimpleDateFormat simpleDate;
+    private PedidoPojo pedido;
+    private SwitchCompat switche;
+    private DatabaseReference pedidoRef;
 
-    public PedidoAdapter(List<PedidoPojo> listPedido) {
 
+    public PedidoAdapter(List<PedidoPojo> listPedido, DatabaseReference pedidoRef) {
+        this.pedidoRef = pedidoRef;
         this.listPedido = listPedido;
     }
 
-    public static class PedidoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    public class PedidoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         TextView nombre;
         TextView perfume;
         TextView mililitros;
         TextView fechaEntrega;
         SwitchCompat aSwitch;
-        String fecha;
+
 
         public PedidoViewHolder(View itemView) {
             super(itemView);
@@ -57,23 +65,8 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
         @Override    //paso2
         public void onClick(View v) {
             clickListener.onItemClick(getAdapterPosition(), v);
-
             mostrarDetalle(getAdapterPosition(), v);
             Log.i("ENTROO ", "onclick");
-        }
-
-        private void mostrarDetalle(int adapterPosition, View v) {
-            if (aSwitch.isChecked()) {
-                Snackbar.make(v, "PEDIDO pagado", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-
-            } else {
-                Snackbar.make(v, "PEDIDO no pago", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-
-            }
         }
 
         @Override
@@ -81,6 +74,29 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
             Log.i("ENTROO ", "ONLONGCLICK  ENTROOOO");
             clickListener.onItemLongClick(getAdapterPosition(), v);
             return false;
+        }
+    }
+
+    private void mostrarDetalle(int adapterPosition, View v) {
+        switche = (SwitchCompat) v.findViewById(R.id.switcher);
+        if (switche.isChecked()) {
+            pedido = listPedido.get(adapterPosition);
+            String key = pedido.getKey();
+            DatabaseReference hopperRef = pedidoRef.child(key);
+            Map<String, Object> userUpdates = new HashMap<String, Object>();
+            userUpdates.put("estado", 1);
+            hopperRef.updateChildren(userUpdates);
+            Snackbar.make(v, "PEDIDO pagado", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        } else {
+            pedido = listPedido.get(adapterPosition);
+            String key = pedido.getKey();
+            DatabaseReference hopperRef = pedidoRef.child(key);
+            Map<String, Object> userUpdates = new HashMap<String, Object>();
+            userUpdates.put("estado", 0);
+            hopperRef.updateChildren(userUpdates);
+            Snackbar.make(v, "PEDIDO no pagado", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
         }
     }
 

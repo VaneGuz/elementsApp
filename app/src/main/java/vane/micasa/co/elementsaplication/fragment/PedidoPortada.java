@@ -81,13 +81,13 @@ public class PedidoPortada extends Fragment {
         rv = (RecyclerView) view.findViewById(R.id.recycler_portada);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        database = database.getInstance();
+        pedidoRef = database.getReference(FirebaseReferences.PEDIDO_REFERENCE);
 
         adapter = new PedidoPortadaAdapter(listPedidoPortada);
         rv.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-        database = database.getInstance();
-        pedidoRef = database.getReference(FirebaseReferences.PEDIDO_REFERENCE);
 
         updateList();
 
@@ -116,7 +116,7 @@ public class PedidoPortada extends Fragment {
                         ) {
 
                     int estado= snapshot.getValue(PedidoPojo.class).getEstado();
-                    if(estado!=1){
+                    if(estado != 1){
                         PedidoPojo pedido = snapshot.getValue(PedidoPojo.class);
                         pedido.setKey(snapshot.getKey());
                         listPedidoPortada.add(pedido);

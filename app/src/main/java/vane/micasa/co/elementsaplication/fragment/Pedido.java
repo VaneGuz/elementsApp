@@ -91,13 +91,13 @@ public class Pedido extends Fragment {
         rv = (RecyclerView) view.findViewById(R.id.recycler_pedido);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        database = database.getInstance();
+        pedidoRef = database.getReference(FirebaseReferences.PEDIDO_REFERENCE);
 
-        adapter = new PedidoAdapter(listPedido);
+        adapter = new PedidoAdapter(listPedido,pedidoRef);
         rv.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-        database = database.getInstance();
-        pedidoRef = database.getReference(FirebaseReferences.PEDIDO_REFERENCE);
 
         updateList();
 
